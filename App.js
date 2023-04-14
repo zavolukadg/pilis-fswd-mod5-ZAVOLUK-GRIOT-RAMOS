@@ -4,10 +4,10 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { HomeScreen } from './src/screens/home/HomeScreen'
 import { ProfileScreen } from './src/screens/profile/ProfileScreen'
-import { EventsListScreen } from './src/screens/events-list/EventsListScreen'
+import { EventsListStackScreen } from './src/screens/events-list/EventsListStackScreen'
 import { Ionicons,FontAwesome } from '@expo/vector-icons'
 import { COLORS, SPACING } from './src/utils/theme'
-import { UserProvider } from './src/context/UserContext'
+import { UserProvider } from './src/contexts/UserContext'
 
 const Tab = createBottomTabNavigator()
 
@@ -38,12 +38,12 @@ export default function App () {
         <NavigationContainer>
           <Tab.Navigator screenOptions={screenOptions}>
             <Tab.Screen name='Home' component={HomeScreen} />
-            <Tab.Screen name='Eventos' component={EventsListScreen} />
+            <Tab.Screen name='Eventos' component={EventsListStackScreen} />
             <Tab.Screen name='Profile' component={ProfileScreen} />
           </Tab.Navigator>
         </NavigationContainer>
-        <StatusBar style='auto' />
       </UserProvider>
+      <StatusBar style='auto' />
     </>
   )
 }

@@ -1,24 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, SafeAreaView, FlatList, Pressable, Image } from 'react-native'
 import { styles } from './EventsListScreen.styles'
-import { data } from '../../api/data'
 import { SearchBar } from '../../components/search-bar/SearchBar'
 import { getEventsList } from '../../api/events.service'
 
-const evento = ({ item }) => (
-  <Pressable onPress={() => console.warn(`Elemento: ${item.title}`)}>
-    <View style={styles.itemContainer}>
-      <Image source={item.images[0]} style={styles.itemImage} />
-      <Text style={styles.itemTitle}>{item.title}</Text>
-      <Text style={styles.itemPrice}>{item.price}</Text>
-    </View>
-  </Pressable>
-)
-
-export const EventsListScreen = () => {
+export const EventsListScreen = ({navigation}) => {
   const [searchQuery, setSearchQuery] = useState('')
   const [eventsList, setEventsList] = useState([])
 
+  const imagenPruebaSrc = "../../../assets/images/feriapancasero.jpg";
   const handleSearch = (query) => {
     setSearchQuery(query)
   }
@@ -34,12 +24,21 @@ export const EventsListScreen = () => {
       .catch(err => console.log(err))
   }, [])
 
+  const evento = ({ item }) => (
+    <Pressable onPress={() => navigation.navigate('Detalle', { item })}>
+      <View style={styles.itemContainer}>
+        <Image source={require('../../../assets/images/feriapancasero.jpg')} style={styles.itemImage} />
+        <Text style={styles.itemTitle}>{item.title}</Text>
+        <Text style={styles.itemPrice}>Precio: ${item.precio}</Text>
+      </View>
+    </Pressable>
+  )
 
   return (
     <SafeAreaView style={styles.container}>
       <SearchBar handleSearch={handleSearch} searchQuery={searchQuery} />
       <FlatList
-        data={data}
+        data={filteredEvents}
         renderItem={evento}
         keyExtractor={item => item.id}
         style={styles.itemList}
