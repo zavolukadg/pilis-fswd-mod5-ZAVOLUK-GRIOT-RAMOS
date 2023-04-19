@@ -11,13 +11,41 @@ export const EventDetailScreen = ({ route }) => {
   const { item } = route.params
   const { currentUser } = useContext(UserContext)
 
+  
+  const urlImg1 = [
+    require('../../../assets/images/Flores/imagen1.jpg'),
+    require('../../../assets/images/Viacrucis/imagen1.jpg'),
+    require('../../../assets/images/Maraton/imagen1.jpg'),
+    require('../../../assets/images/Peña/imagen1.jpg'),
+    require('../../../assets/images/Festival/imagen1.jpg'),
+    require('../../../assets/images/Fecha/imagen1.jpg'),
+  ];
+
+  const urlImg2 = [
+    require('../../../assets/images/Flores/imagen2.jpg'),
+    require('../../../assets/images/Viacrucis/imagen2.jpg'),
+    require('../../../assets/images/Maraton/imagen2.jpg'),
+    require('../../../assets/images/Peña/imagen2.jpg'),
+    require('../../../assets/images/Festival/imagen2.jpg'),
+    require('../../../assets/images/Fecha/imagen2.jpg'),
+  ];
+
+  const urlImg3 = [
+    require('../../../assets/images/Flores/imagen3.jpg'),
+    require('../../../assets/images/Viacrucis/imagen3.jpg'),
+    require('../../../assets/images/Maraton/imagen3.jpg'),
+    require('../../../assets/images/Peña/imagen3.jpg'),
+    require('../../../assets/images/Festival/imagen3.jpg'),
+    require('../../../assets/images/Fecha/imagen3.jpg'),
+  ];
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.imageContainer}>
         <ScrollView horizontal pagingEnabled style={styles.imageContainer}>
-          {item.images.map((image, idx) => (
-            <Image key={idx} source={image} style={styles.image} resizeMode='cover' />
-          ))}
+          <Image source={urlImg1[item.id - 1]} style={styles.itemImage} resizeMode='cover' />
+          <Image source={urlImg2[item.id - 1]} style={styles.itemImage} resizeMode='cover' />
+          <Image source={urlImg3[item.id - 1]} style={styles.itemImage} resizeMode='cover' />
         </ScrollView>
         <Text style={styles.itemTitle}>Longitud: {item.locationCoordinates.longitud}</Text> 
       </View>
