@@ -8,6 +8,15 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 export const EventsListScreen = ({navigation}) => {
   const [searchQuery, setSearchQuery] = useState('')
   const [eventsList, setEventsList] = useState([])
+
+  const url = [
+    require('../../../assets/images/Flores/portada.jpg'),
+    require('../../../assets/images/Viacrucis/portada.jpg'),
+    require('../../../assets/images/Maraton/portada.jpg'),
+    require('../../../assets/images/Peña/portada.jpg'),
+    require('../../../assets/images/Festival/portada.jpg'),
+    require('../../../assets/images/Fecha/portada.jpg'),
+]
   const [checkboxState, setCheckboxState] = useState(false);
   const[categoryFilter, setCategoryFilter] = useState([]);
   const[eventosFiltrados,setEventosFiltrados] = useState([]);
@@ -68,7 +77,7 @@ export const EventsListScreen = ({navigation}) => {
   const evento = ({ item }) => (
     <Pressable onPress={() => navigation.navigate('Detalle', { item })}>
       <View style={styles.itemContainer}>
-        <Image source={require(imagenPruebaSrc)} style={styles.itemImage} />
+        <Image source={url[item.id - 1]} style={styles.itemImage} />
         <Text style={styles.itemTitle}>{item.title}</Text>
         <Text style={styles.itemPrice}>Precio: ${item.precio}</Text>
       </View>
