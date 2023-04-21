@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { Component, useContext, useEffect } from 'react'
 import { View, ScrollView, Image, Text } from 'react-native'
 import MapView, { Marker } from 'react-native-maps'
 import { styles } from './EventDetailScreen.styles'
@@ -10,44 +10,24 @@ import { UserContext } from '../../contexts/UserContext'
 export const EventDetailScreen = ({ route }) => {
   const { item } = route.params
   const { currentUser } = useContext(UserContext)
+  
+  if (item.images.length > 3) {
+    item.images.shift();
+  }
 
   
-  const urlImg1 = [
-    require('../../../assets/images/Flores/imagen1.jpg'),
-    require('../../../assets/images/Viacrucis/imagen1.jpg'),
-    require('../../../assets/images/Maraton/imagen1.jpg'),
-    require('../../../assets/images/Peña/imagen1.jpg'),
-    require('../../../assets/images/Festival/imagen1.jpg'),
-    require('../../../assets/images/Fecha/imagen1.jpg'),
-  ];
-
-  const urlImg2 = [
-    require('../../../assets/images/Flores/imagen2.jpg'),
-    require('../../../assets/images/Viacrucis/imagen2.jpg'),
-    require('../../../assets/images/Maraton/imagen2.jpg'),
-    require('../../../assets/images/Peña/imagen2.jpg'),
-    require('../../../assets/images/Festival/imagen2.jpg'),
-    require('../../../assets/images/Fecha/imagen2.jpg'),
-  ];
-
-  const urlImg3 = [
-    require('../../../assets/images/Flores/imagen3.jpg'),
-    require('../../../assets/images/Viacrucis/imagen3.jpg'),
-    require('../../../assets/images/Maraton/imagen3.jpg'),
-    require('../../../assets/images/Peña/imagen3.jpg'),
-    require('../../../assets/images/Festival/imagen3.jpg'),
-    require('../../../assets/images/Fecha/imagen3.jpg'),
-  ];
-
   return (
     <ScrollView style={styles.container}>
       <View style={styles.imageContainer}>
         <ScrollView horizontal pagingEnabled style={styles.imageContainer}>
-          <Image source={urlImg1[item.id - 1]} style={styles.itemImage} resizeMode='cover' />
-          <Image source={urlImg2[item.id - 1]} style={styles.itemImage} resizeMode='cover' />
-          <Image source={urlImg3[item.id - 1]} style={styles.itemImage} resizeMode='cover' />
+        {item.images.map((image, idx) => (
+            <Image key={idx} source={{ uri: `https://drive.google.com/uc?id=${image}` }} style={styles.image} resizeMode='cover' />
+          ))}
+          {/* <Image source={{ uri: `https://drive.google.com/uc?id=${urlImg1[item.id - 1]}` }} style={styles.image} resizeMode='cover' />
+          <Image source={{ uri: `https://drive.google.com/uc?id=${urlImg2[item.id - 1]}` }} style={styles.image} resizeMode='cover' />
+          <Image source={{ uri: `https://drive.google.com/uc?id=${urlImg3[item.id - 1]}` }} style={styles.image} resizeMode='cover' /> */}
         </ScrollView>
-        <Text style={styles.itemTitle}>Longitud: {item.locationCoordinates.longitud}</Text> 
+        <Text style={styles.itemTitle}>Latitud: {item.locationCoordinates.latitud} | Longitud: {item.locationCoordinates.longitud}</Text> 
       </View>
 
       <View style={styles.textContainer}>
@@ -60,6 +40,7 @@ export const EventDetailScreen = ({ route }) => {
         </View>
         <Text style={styles.description}>{item.description}</Text>
       </View>
+
       <View style={styles.itemContainer}>
         <Text style={styles.title}>{item.location}</Text>
         <MapView
