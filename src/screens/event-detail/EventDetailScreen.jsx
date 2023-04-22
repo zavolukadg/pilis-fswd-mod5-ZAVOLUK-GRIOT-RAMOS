@@ -47,12 +47,10 @@ export const EventDetailScreen = ({ route }) => {
           <Image source={urlImg2[item.id - 1]} style={styles.itemImage} resizeMode='cover' />
           <Image source={urlImg3[item.id - 1]} style={styles.itemImage} resizeMode='cover' />
         </ScrollView>
-        <Text style={styles.itemTitle}>Longitud: {item.locationCoordinates.longitud}</Text> 
       </View>
 
       <View style={styles.textContainer}>
         <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.location}>{item.location}</Text>
         <Text style={styles.price}>{item.price}</Text>
         <View style={styles.ratingContainer}>
           <Ionicons name='star' size={20} color={COLORS.primary} />

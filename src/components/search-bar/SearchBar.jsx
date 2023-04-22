@@ -9,7 +9,7 @@ export const SearchBar = ({ handleSearch, searchQuery }) => {
     <View style={styles.searchContainer}>
       <Ionicons name='search' size={20} color={COLORS.primary} />
       <TextInput
-        placeholder='¿Buscar Evento?'
+        placeholder='Buscar Evento'
         style={styles.searchInput}
         onChangeText={handleSearch}
         value={searchQuery}
