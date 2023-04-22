@@ -13,22 +13,13 @@ export const EventsListScreen = ({navigation}) => {
   const [eventosFiltrados,setEventosFiltrados] = useState([]);
   const [categories,setCategories] = useState([]);
 
-  const url = [
-    require('../../../assets/images/Flores/portada.jpg'),
-    require('../../../assets/images/Viacrucis/portada.jpg'),
-    require('../../../assets/images/Maraton/portada.jpg'),
-    require('../../../assets/images/Peña/portada.jpg'),
-    require('../../../assets/images/Festival/portada.jpg'),
-    require('../../../assets/images/Fecha/portada.jpg'),
-  ]
-
- /*  const handleSearch = (query) => {
+  const handleSearch = (query) => {
     setSearchQuery(query)
   }
 
   const filteredEvents = eventsList.filter(evento => (
     evento.title.toLowerCase().includes(searchQuery.toLowerCase())
-  )) */
+  ))
 
   const setFilters = (events) => {
     let categoriesMap = events.map(evento=>{
@@ -38,35 +29,29 @@ export const EventsListScreen = ({navigation}) => {
     setCategories([...categoriesMapArr.values()])
   }
  
-  const handleFilterChange = ({item}) => {
+  const handleFilterChange = (item) => {
+    console.log("Se ejecuta por primera vez");
     let primerFiltro = eventsList
 
-    console.log(searchQuery);
-    console.log(item);
-    if(searchQuery){
-      console.log("Primer FIltro");
+    /* setSearchQuery(query) */
+    /* if(query!=null){
+      console.log("Prueba");      
       primerFiltro = eventsList.filter(evento => evento.title.toLowerCase().includes(searchQuery.toLowerCase()))
-    } 
+    } */
 
-    if(item.category){
-      console.log("Segundo FIltro");
-      let categoryCheck = item.category
-      let filtersChecked
-      if (!categoryFilter.includes(categoryCheck)){ //Si no incluye la categoria la agrega
-        categoryFilter.push(categoryCheck);
-        filtersChecked = categoryFilter
-      }
-      else{
-        filtersChecked = categoryFilter.filter(category => category != categoryCheck)
-      }
-      setCategoryFilter(filtersChecked)
-      filtersChecked.length != 0? setEventosFiltrados(primerFiltro.filter(evento => filtersChecked.includes(evento.category)))
-      :
-      setEventosFiltrados(eventsList)
+    let categoryCheck = item.item.category
+    let filtersChecked
+    if (!categoryFilter.includes(categoryCheck)){ //Si no incluye la categoria la agrega
+      categoryFilter.push(categoryCheck);
+      filtersChecked = categoryFilter
     }
     else{
-      setEventosFiltrados(eventsList)
+      filtersChecked = categoryFilter.filter(category => category != categoryCheck)
     }
+    setCategoryFilter(filtersChecked)
+    filtersChecked.length != 0? setEventosFiltrados(primerFiltro.filter(evento => filtersChecked.includes(evento.category)))
+    :
+    setEventosFiltrados(eventsList)
   }
 
   useEffect(() => {
@@ -119,7 +104,7 @@ export const EventsListScreen = ({navigation}) => {
         />
       </View>
       <FlatList
-        data={eventosFiltrados}
+        data={filteredEvents}
         renderItem={evento}
         keyExtractor={item => item.id}
         style={styles.itemList}
