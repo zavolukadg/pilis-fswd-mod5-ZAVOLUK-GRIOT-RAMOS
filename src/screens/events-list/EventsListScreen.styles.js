@@ -8,7 +8,6 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.grey
   },
   itemContainer: {
-    flex: 1,
     width: Dimensions.get('screen').width - 20,
     //borderRadius: 20, // Fixed value --- magic number
     borderTopLeftRadius: 100,
@@ -39,5 +38,14 @@ export const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 10,
     marginHorizontal: 10
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
+    marginBottom: 20,
+  },
+  checkbox: {
+    alignSelf: 'center',
+    marginLeft: 20,
+    marginTop: 16
   }
 })
