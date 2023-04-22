@@ -21,15 +21,16 @@ export const EventsListScreen = ({navigation}) => {
   const[categoryFilter, setCategoryFilter] = useState([]);
   const[eventosFiltrados,setEventosFiltrados] = useState([]);
   const[categories,setCategories] = useState([]);
+  
 
   const imagenPruebaSrc = '../../../assets/images/feriapancasero.jpg';
   const handleSearch = (query) => {
     setSearchQuery(query)
   }
 
-  const filteredEvents = eventsList.filter(evento => (
-    evento.title.toLowerCase().includes(searchQuery.toLowerCase())
-  ))
+   const filteredEvents = eventosFiltrados.filter(evento => (
+     evento.title.toLowerCase().includes(searchQuery.toLowerCase())
+   ))
 
   const setFilters = (events) => {
     let categoriesMap = events.map(evento=>{
@@ -40,15 +41,7 @@ export const EventsListScreen = ({navigation}) => {
   }
  
   const handleFilterChange = (item) => {
-    console.log("Se ejecuta por primera vez");
-    let primerFiltro = eventsList
-
-    /* setSearchQuery(query) */
-    /* if(query!=null){
-      console.log("Prueba");      
-      primerFiltro = eventsList.filter(evento => evento.title.toLowerCase().includes(searchQuery.toLowerCase()))
-    } */
-
+    
     let categoryCheck = item.item.category
     let filtersChecked
     if (!categoryFilter.includes(categoryCheck)){ //Si no incluye la categoria la agrega
@@ -59,9 +52,9 @@ export const EventsListScreen = ({navigation}) => {
       filtersChecked = categoryFilter.filter(category => category != categoryCheck)
     }
     setCategoryFilter(filtersChecked)
-    filtersChecked.length != 0? setEventosFiltrados(primerFiltro.filter(evento => filtersChecked.includes(evento.category)))
+    filtersChecked.length != 0? setEventosFiltrados(eventsList.filter(evento => filtersChecked.includes(evento.category)))
     :
-    setEventosFiltrados(eventsList)
+    setEventosFiltrados(eventsList) 
   }
 
   useEffect(() => {
@@ -114,7 +107,7 @@ export const EventsListScreen = ({navigation}) => {
         />
       </View>
       <FlatList
-        data={eventosFiltrados}
+        data={filteredEvents}
         renderItem={evento}
         keyExtractor={item => item.id}
         style={styles.itemList}
