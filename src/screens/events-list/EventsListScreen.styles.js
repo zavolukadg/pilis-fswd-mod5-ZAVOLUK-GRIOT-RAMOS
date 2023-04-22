@@ -9,7 +9,9 @@ export const styles = StyleSheet.create({
   },
   itemContainer: {
     width: Dimensions.get('screen').width - 20,
-    borderRadius: 20, // Fixed value --- magic number
+    //borderRadius: 20, // Fixed value --- magic number
+    borderTopLeftRadius: 100,
+    borderBottomRightRadius: 100,
     overflow: 'hidden',
     marginBottom: 10,
     backgroundColor: COLORS.white,

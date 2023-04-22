@@ -82,7 +82,7 @@ export const EventsListScreen = ({navigation}) => {
   const evento = ({ item }) => (
     <Pressable onPress={() => navigation.navigate('Detalle', { item })}>
       <View style={styles.itemContainer}>
-        <Image source={url[item.id - 1]} style={styles.itemImage} />
+        <Image source={{ uri: `https://drive.google.com/uc?id=${item.images[0]}` }} style={styles.itemImage} />
         <Text style={styles.itemTitle}>{item.title}</Text>
         <Text style={styles.itemPrice}>Precio: ${item.precio}</Text>
       </View>
