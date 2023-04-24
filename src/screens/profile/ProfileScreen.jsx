@@ -39,7 +39,7 @@ const LoginScreen = ({ login }) => {
         )}
         name="email"
       />
-      {errors.firstName && <Text>This is required.</Text>}
+      {errors.email && <Text style={styles.errorMessage}>El usuario es obligatorio</Text>}
 
       <Controller
         control={control}
@@ -57,6 +57,7 @@ const LoginScreen = ({ login }) => {
         )}
         name="password"
       />
+      {errors.password && <Text style={styles.errorMessage}>La contraseña es obligatoria</Text>}
       <Button title="Login" onPress={handleSubmit(onSubmit)} />
     </>
   )
@@ -95,12 +96,17 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: StatusBar.currentHeight,
-    backgroundColor: COLORS.grey
+    backgroundColor: COLORS.grey,
+    padding: 10,
+    margin: 12,
+    gap: 10,
   },
   input: {
     height: 40,
-    margin: 12,
     borderWidth: 1,
-    padding: 10,
+    paddingHorizontal: 10,
   },
+  errorMessage: {
+    color: 'red',
+  }
 })
