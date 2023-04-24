@@ -7,7 +7,7 @@ import { ProfileScreen } from './src/screens/profile/ProfileScreen'
 import { EventsListStackScreen } from './src/screens/events-list/EventsListStackScreen'
 import { Ionicons,FontAwesome } from '@expo/vector-icons'
 import { COLORS, SPACING } from './src/utils/theme'
-import { UserProvider } from './src/contexts/UserContext'
+import { AuthProvider } from './src/contexts/AuthContext'
 
 const Tab = createBottomTabNavigator()
 
@@ -34,7 +34,7 @@ const screenOptions = ({ route }) => {
 export default function App () {
   return (
     <>
-      <UserProvider>
+      <AuthProvider>
         <NavigationContainer>
           <Tab.Navigator screenOptions={screenOptions}>
             <Tab.Screen name='Home' component={HomeScreen} />
@@ -42,7 +42,7 @@ export default function App () {
             <Tab.Screen name='Profile' component={ProfileScreen} />
           </Tab.Navigator>
         </NavigationContainer>
-      </UserProvider>
+      </AuthProvider>
       <StatusBar style='auto' />
     </>
   )

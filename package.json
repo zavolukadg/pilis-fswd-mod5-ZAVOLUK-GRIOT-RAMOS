@@ -18,6 +18,7 @@
     "expo-status-bar": "~1.4.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.43.9",
     "react-native": "0.71.6",
     "react-native-bouncy-checkbox": "^3.0.7",
     "react-native-maps": "^1.4.0",
