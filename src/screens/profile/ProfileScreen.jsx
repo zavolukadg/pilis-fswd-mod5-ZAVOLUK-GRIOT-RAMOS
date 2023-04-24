@@ -1,20 +1,21 @@
 import React from 'react'
-import { Text,StyleSheet,SafeAreaView,Button, TextInput, Alert, StatusBar} from 'react-native'
+import { ActivityIndicator, View, Text,StyleSheet,SafeAreaView,Button, TextInput, Alert, StatusBar, Dimensions} from 'react-native'
 import { COLORS } from '../../utils/theme'
 import { useForm, Controller } from "react-hook-form";
 import { useAuth } from '../../hooks/useAuth';
+import { FontAwesome } from '@expo/vector-icons';
 
 const LoginScreen = ({ login }) => {
   const { control, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
-      email: '',
+      user: '',
       password: '',
     }
   });
 
-  const onSubmit = async ({ email, password }) => {
+  const onSubmit = async ({ user, password }) => {
     try {
-      await login(email, password)
+      await login(user, password)
     } catch (error) {
       Alert.alert('Error', error.message)
     }
@@ -22,6 +23,9 @@ const LoginScreen = ({ login }) => {
 
   return (
     <>
+      <View style={styles.icon}>
+        <FontAwesome name="user-circle" size={108} color={COLORS.primary} />
+      </View>
       <Controller
         control={control}
         rules={{
@@ -33,13 +37,13 @@ const LoginScreen = ({ login }) => {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            placeholder="Email"
+            placeholder="Usuario"
             keyboardType="email-address"
           />
         )}
-        name="email"
+        name="user"
       />
-      {errors.email && <Text style={styles.errorMessage}>El usuario es obligatorio</Text>}
+      {errors.user && <Text style={styles.errorMessage}>El usuario es obligatorio</Text>}
 
       <Controller
         control={control}
@@ -49,7 +53,7 @@ const LoginScreen = ({ login }) => {
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
             style={styles.input}
-            placeholder="Password"
+            placeholder="Contraseña"
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
@@ -58,7 +62,7 @@ const LoginScreen = ({ login }) => {
         name="password"
       />
       {errors.password && <Text style={styles.errorMessage}>La contraseña es obligatoria</Text>}
-      <Button title="Login" onPress={handleSubmit(onSubmit)} />
+      <Button color={COLORS.primary} title="Login" onPress={handleSubmit(onSubmit)} />
     </>
   )
 }
@@ -66,23 +70,28 @@ const LoginScreen = ({ login }) => {
 const UserScreen = ({ logout, user }) => {
   return (
     <>
-      <Text>Bienvenido</Text>
-      <Text>Nombre: {user.name}</Text>
-      <Text>Usuario: {user.user}</Text>
-      <Text>Direccion: {`${user.direccion.calle} ${user.direccion.numero}`}</Text>
+      <View style={styles.icon}>
+        <FontAwesome name="user-circle" size={108} color={COLORS.primary} />
+      </View>
+      <Text style={styles.welcomeText}>Bienvenido</Text>
+      <Text style={styles.userText}>Nombre: {user.name}</Text>
+      <Text style={styles.userText}>Usuario: {user.user}</Text>
+      <Text style={styles.userText}>Direccion: {`${user.direccion.calle} ${user.direccion.numero}`}</Text>
 
-      <Button title="Logout" onPress={logout} />
+      <Button color={COLORS.primary} title="Logout" onPress={logout} />
     </>
   )
 }
 
 export const ProfileScreen = () => {
-  const { login, logout, isAuthenticated, user } = useAuth();
+  const { login, logout, isAuthenticated, user, isLoading } = useAuth();
 
   return (
     <SafeAreaView style={styles.container}>
       {
-        isAuthenticated ? (
+        isLoading ? (
+          <ActivityIndicator size="large" color={COLORS.primary} />
+        ) : isAuthenticated ? (
           <UserScreen logout={logout} user={user} />
         ) : (
           <LoginScreen login={login} />
@@ -100,13 +109,28 @@ export const styles = StyleSheet.create({
     padding: 10,
     margin: 12,
     gap: 10,
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
   input: {
     height: 40,
     borderWidth: 1,
     paddingHorizontal: 10,
+    borderRadius: 20,
   },
   errorMessage: {
     color: 'red',
+  },
+  icon: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  userText: {
+    fontSize: 20,
+  },
+  welcomeText: {
+    fontSize: 30,
+    textAlign: 'center',
+    margin: 10,
   }
 })
