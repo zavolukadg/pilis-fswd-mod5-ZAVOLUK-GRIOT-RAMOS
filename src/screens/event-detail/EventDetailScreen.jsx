@@ -5,11 +5,9 @@ import { styles } from './EventDetailScreen.styles'
 import { Ionicons } from '@expo/vector-icons'
 import { COLORS } from '../../utils/theme'
 import { Link } from '@react-navigation/native'
-import { UserContext } from '../../contexts/UserContext'
 
 export const EventDetailScreen = ({ route }) => {
   const { item } = route.params
-  const { currentUser } = useContext(UserContext)
   
   if (item.images.length > 3) {
     item.images.shift();

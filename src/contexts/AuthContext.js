@@ -28,6 +28,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   const logout = async () => {
+    console.log("User logged out")
     setCurrentUser(null)
   }
 
