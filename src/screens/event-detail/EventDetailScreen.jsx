@@ -5,30 +5,24 @@ import { styles } from './EventDetailScreen.styles'
 import { Ionicons } from '@expo/vector-icons'
 import { COLORS } from '../../utils/theme'
 import { Link } from '@react-navigation/native'
+import { AuthContext } from '../../contexts/AuthContext'
 
 export const EventDetailScreen = ({ route }) => {
   const { item } = route.params
+  const { currentUser } = useContext(AuthContext)
   
-  if (item.images.length > 3) {
+  if (item.images.length > 4) {
     item.images.shift();
   }
 
-  
   return (
     <ScrollView style={styles.container}>
       <View style={styles.imageContainer}>
         <ScrollView horizontal pagingEnabled style={styles.imageContainer}>
         {item.images.map((image, idx) => (
             <Image key={idx} source={{ uri: `https://drive.google.com/uc?id=${image}` }} style={styles.image} resizeMode='cover' />
-          ))}
-          {/* <Image source={{ uri: `https://drive.google.com/uc?id=${urlImg1[item.id - 1]}` }} style={styles.image} resizeMode='cover' />
-          <Image source={{ uri: `https://drive.google.com/uc?id=${urlImg2[item.id - 1]}` }} style={styles.image} resizeMode='cover' />
-          <Image source={{ uri: `https://drive.google.com/uc?id=${urlImg3[item.id - 1]}` }} style={styles.image} resizeMode='cover' /> */}
+        ))}
         </ScrollView>
-<<<<<<< HEAD
-=======
-        <Text style={styles.itemTitle}>Latitud: {item.locationCoordinates.latitud} | Longitud: {item.locationCoordinates.longitud}</Text> 
->>>>>>> bdfa9498d81a5c9641d04c2a76d79f679f1d6be4
       </View>
 
       <View style={styles.textContainer}>
@@ -42,7 +36,7 @@ export const EventDetailScreen = ({ route }) => {
       </View>
 
       <View style={styles.itemContainer}>
-        <Text style={styles.title}>{item.location}</Text>
+        <Text style={styles.location}>{item.location}</Text>
         <MapView
           style={styles.map}
           initialRegion={{

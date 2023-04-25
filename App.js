@@ -26,8 +26,7 @@ const screenOptions = ({ route }) => {
     tabBarActiveTintColor: COLORS.primary,
     tabBarInactiveTintColor: COLORS.inactive,
     headerShown: false,
-    tabBarStyle: styles.tabBar
-
+    tabBarStyle: styles.tabBar,
   }
 }
 

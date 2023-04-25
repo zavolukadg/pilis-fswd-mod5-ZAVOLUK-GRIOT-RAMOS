@@ -47,5 +47,10 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     marginLeft: 20,
     marginTop: 16
-  }
+  },
+  emptyMessage:{
+    padding:20,
+    fontSize:16,
+    color: COLORS.warning
+  },
 })

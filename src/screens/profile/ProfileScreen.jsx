@@ -57,6 +57,9 @@ const LoginScreen = ({ login }) => {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
+            secureTextEntry={true}
+            autoCorrect={false}
+            autoCapitalize='none'
           />
         )}
         name="password"

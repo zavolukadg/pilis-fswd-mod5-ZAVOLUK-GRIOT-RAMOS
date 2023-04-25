@@ -1,25 +1,28 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, SafeAreaView, FlatList, Pressable, Image, TextInput } from 'react-native'
+import { View, Text, SafeAreaView, FlatList, Pressable, Image, TouchableOpacity } from 'react-native'
 import { styles } from './EventsListScreen.styles'
 import { SearchBar } from '../../components/search-bar/SearchBar'
 import { getEventsList } from '../../api/events.service'
-import BouncyCheckbox from "react-native-bouncy-checkbox";
+import BouncyCheckbox from "react-native-bouncy-checkbox"
+import { PlusButton } from '../../components/plus/PlusButton'
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+
 
 export const EventsListScreen = ({navigation}) => {
   const [searchQuery, setSearchQuery] = useState('')
   const [eventsList, setEventsList] = useState([])
   const [checkboxState, setCheckboxState] = useState(false);
-  const [categoryFilter, setCategoryFilter] = useState([]);
-  const [eventosFiltrados,setEventosFiltrados] = useState([]);
-  const [categories,setCategories] = useState([]);
+  const[categoryFilter, setCategoryFilter] = useState([]);
+  const[eventosFiltrados,setEventosFiltrados] = useState([]);
+  const[categories,setCategories] = useState([]);
 
   const handleSearch = (query) => {
     setSearchQuery(query)
   }
 
-  const filteredEvents = eventsList.filter(evento => (
-    evento.title.toLowerCase().includes(searchQuery.toLowerCase())
-  ))
+   const filteredEvents = eventosFiltrados.filter(evento => (
+     evento.title.toLowerCase().includes(searchQuery.toLowerCase())
+   ))
 
   const setFilters = (events) => {
     let categoriesMap = events.map(evento=>{
@@ -29,17 +32,9 @@ export const EventsListScreen = ({navigation}) => {
     setCategories([...categoriesMapArr.values()])
   }
  
-  const handleFilterChange = (item) => {
-    console.log("Se ejecuta por primera vez");
-    let primerFiltro = eventsList
-
-    /* setSearchQuery(query) */
-    /* if(query!=null){
-      console.log("Prueba");      
-      primerFiltro = eventsList.filter(evento => evento.title.toLowerCase().includes(searchQuery.toLowerCase()))
-    } */
-
-    let categoryCheck = item.item.category
+  const handleFilterChange = ({item}) => {
+    
+    let categoryCheck = item.category
     let filtersChecked
     if (!categoryFilter.includes(categoryCheck)){ //Si no incluye la categoria la agrega
       categoryFilter.push(categoryCheck);
@@ -49,9 +44,9 @@ export const EventsListScreen = ({navigation}) => {
       filtersChecked = categoryFilter.filter(category => category != categoryCheck)
     }
     setCategoryFilter(filtersChecked)
-    filtersChecked.length != 0? setEventosFiltrados(primerFiltro.filter(evento => filtersChecked.includes(evento.category)))
+    filtersChecked.length != 0? setEventosFiltrados(eventsList.filter(evento => filtersChecked.includes(evento.category)))
     :
-    setEventosFiltrados(eventsList)
+    setEventosFiltrados(eventsList) 
   }
 
   useEffect(() => {
@@ -73,14 +68,19 @@ export const EventsListScreen = ({navigation}) => {
       </View>
     </Pressable>
   )
+  const vacio = () => (
+      <View>
+        <Text style={styles.emptyMessage}>No existen eventos que cumplan con los criterios de busqueda.</Text>
+      </View>
+  )
 
   const checkBoxFilter = ({ item }) => (
     <BouncyCheckbox
       style={styles.checkbox}
       isChecked={checkboxState}
       text={item.category}
-      fillColor="blue"
-      iconStyle={{ borderColor: "blue" }}
+      fillColor="red"
+      iconStyle={{ borderColor: "red" }}
       innerIconStyle={{ borderWidth: 2 }}
       unfillColor="#FFFFFF"
       onPress={() => handleFilterChange({item})}
@@ -92,7 +92,7 @@ export const EventsListScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <SearchBar handleSearch={handleFilterChange} searchQuery={searchQuery} />
+      <SearchBar handleSearch={handleSearch} searchQuery={searchQuery} />
       <View style={styles.checkboxContainer}>
         <FlatList
           data={categories}
@@ -106,19 +106,11 @@ export const EventsListScreen = ({navigation}) => {
       <FlatList
         data={filteredEvents}
         renderItem={evento}
+        ListEmptyComponent={vacio}
         keyExtractor={item => item.id}
         style={styles.itemList}
         horizontal={false}
       />
-
-      <View style={styles.searchContainer}>
-        <TextInput
-          placeholder='¿Segundo Buscado?'
-          style={styles.searchInput}
-          onChangeText={handleFilterChange}
-          value={searchQuery}
-        />
-      </View>
     </SafeAreaView>
   )
 }
