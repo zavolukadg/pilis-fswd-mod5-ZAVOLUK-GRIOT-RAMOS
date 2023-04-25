@@ -1,11 +1,15 @@
 import React from 'react'
-import { ActivityIndicator, View, Text,StyleSheet,SafeAreaView,Button, TextInput, Alert, StatusBar, Dimensions} from 'react-native'
+import { ActivityIndicator, View, Text,StyleSheet,SafeAreaView,Button, TextInput, Alert, StatusBar, Dimensions,Pressable} from 'react-native'
 import { COLORS } from '../../utils/theme'
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller} from "react-hook-form";
 import { useAuth } from '../../hooks/useAuth';
 import { FontAwesome } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useTogglePasswordVisibility } from '../../utils/useTogglePasswordVisibility';
 
 const LoginScreen = ({ login }) => {
+  const { passwordVisibility, rightIcon, handlePasswordVisibility } =
+    useTogglePasswordVisibility();
   const { control, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
       user: '',
@@ -13,7 +17,7 @@ const LoginScreen = ({ login }) => {
     }
   });
 
-  const onSubmit = async ({ user, password }) => {
+  const onSubmit = async ({ user, password }) => {   
     try {
       await login(user, password)
     } catch (error) {
@@ -32,14 +36,16 @@ const LoginScreen = ({ login }) => {
           required: true,
         }}
         render={({ field: { onChange, onBlur, value } }) => (
+          <View style={styles.inputContainer}>
           <TextInput
-            style={styles.input}
+            style={styles.inputField}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
             placeholder="Usuario"
             keyboardType="email-address"
           />
+          </View>
         )}
         name="user"
       />
@@ -51,16 +57,21 @@ const LoginScreen = ({ login }) => {
           required: true,
         }}
         render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={styles.input}
-            placeholder="Contraseña"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            secureTextEntry={true}
-            autoCorrect={false}
-            autoCapitalize='none'
-          />
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.inputField}
+              placeholder="Contraseña"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              secureTextEntry={passwordVisibility}
+              autoCorrect={false}
+              autoCapitalize='none'
+            />
+            <Pressable onPress={handlePasswordVisibility}>
+              <MaterialCommunityIcons name={rightIcon} size={22} color="#232323" />
+            </Pressable>
+          </View>
         )}
         name="password"
       />
@@ -115,12 +126,6 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
   },
-  input: {
-    height: 40,
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    borderRadius: 20,
-  },
   errorMessage: {
     color: 'red',
   },
@@ -135,5 +140,20 @@ export const styles = StyleSheet.create({
     fontSize: 30,
     textAlign: 'center',
     margin: 10,
+  },
+  inputContainer: {
+    paddingHorizontal: 10,
+    backgroundColor: 'white',
+    width: '100%',
+    borderRadius: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 4,
+    borderColor: '#d7d7d7',
+  },
+  inputField: {
+    padding: 14,
+    fontSize: 16,
+    width: '90%'
   }
 })
