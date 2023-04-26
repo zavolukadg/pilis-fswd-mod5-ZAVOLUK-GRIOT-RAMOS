@@ -7,11 +7,26 @@
     <image src="./readme-images/Home.png" width = 320px height = 640px>
 </p>
 
+# Detalles de la aplicación
+
+<ol>
+    <li>Al iniciar la app en la pantalla Home se cargan de forma aleatoria las imagenes contenidas en el array url</li>
+    <li>Se agrego en el listado de eventos un filtro con checkbox "react-native-bouncy-checkbox", los mismos se crean de forma dinamica segun las categorias de los eventos incluidos en mockapi. </li>
+    <li>Se agrego un boton en el listado de eventos (+) que nos lleva a una nueva pantalla para poder crear un nuevo evento, para poder visualizar dicho boton el usuario debe estar logueado en la aplicacion, todavia no esta completa la funcionalidad de crear evento por lo que al presionar el boton aceptar solo retorna al listado.</li>
+    <li>Se agrego un custom hook para manejar la visibilidad de la contraseña en la pantalla ProfileScreen useTogglePasswordVisibility</li>
+    <li>En la pantalla EventDetailScreen se utilizo localStorage a modo de ejemplo para maneja la visualizacion de los precios.</li>
+</ol>
+    
 # Usuarios de prueba
 
 >User: joaquin
 >
 >Password: joaquin
+>
+>User: facundo
+>
+>Password: facundo
+
 
 # Equipo
 
