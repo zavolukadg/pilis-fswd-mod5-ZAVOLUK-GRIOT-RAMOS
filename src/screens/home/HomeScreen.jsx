@@ -1,6 +1,5 @@
 import React from 'react'
 import { Text, StyleSheet, View, StatusBar, ImageBackground} from 'react-native'
-import { COLORS } from '../../utils/theme'
 
 const url = 
   [
@@ -18,7 +17,6 @@ const aleatorio =  Math.floor(Math.random() * 7);
 export const HomeScreen = () => {
   return (
     <>
-      
       <View style={styles.container}>
         <ImageBackground source={{ uri: `https://drive.google.com/uc?id=${url[aleatorio]}` }} style={styles.itemImage}>
           <Text style={styles.title}>Festivales de Jujuy</Text>

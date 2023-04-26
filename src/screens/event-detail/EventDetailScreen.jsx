@@ -1,17 +1,16 @@
-import React, { Component, useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { View, ScrollView, Image, Text } from 'react-native'
 import MapView, { Marker } from 'react-native-maps'
 import { styles } from './EventDetailScreen.styles'
 import { Ionicons } from '@expo/vector-icons'
 import { COLORS } from '../../utils/theme'
-import { Link } from '@react-navigation/native'
 import { AuthContext } from '../../contexts/AuthContext'
 
 export const EventDetailScreen = ({ route }) => {
   const { item } = route.params
-  const { currentUser } = useContext(AuthContext)
+  const { user } = useContext(AuthContext)
   
-  if (item.images.length > 4) {
+  if (item.images.length > 3) {
     item.images.shift();
   }
 
@@ -27,7 +26,11 @@ export const EventDetailScreen = ({ route }) => {
 
       <View style={styles.textContainer}>
         <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.price}>{item.price}</Text>
+        {user? 
+        (<Text style={styles.price}>Precio: ${item.precio}</Text>)
+        :
+        <Text style={{color: 'red',paddingVertical:15}}>Debe loguerse para conocer el precio</Text>
+        }
         <View style={styles.ratingContainer}>
           <Ionicons name='star' size={20} color={COLORS.primary} />
           <Text style={styles.rating}>{item.rating}</Text>

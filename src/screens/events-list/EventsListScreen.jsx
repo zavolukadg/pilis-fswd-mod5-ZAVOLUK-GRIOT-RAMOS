@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react'
-import { View, Text, SafeAreaView, FlatList, Pressable, Image, TouchableOpacity } from 'react-native'
+import React, { useState, useEffect, useContext } from 'react'
+import { View, Text, SafeAreaView, FlatList, Pressable, Image,TouchableOpacity } from 'react-native'
 import { styles } from './EventsListScreen.styles'
 import { SearchBar } from '../../components/search-bar/SearchBar'
 import { getEventsList } from '../../api/events.service'
 import BouncyCheckbox from "react-native-bouncy-checkbox"
 import { PlusButton } from '../../components/plus/PlusButton'
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-
+import { AuthContext } from '../../contexts/AuthContext'
 
 export const EventsListScreen = ({navigation}) => {
   const [searchQuery, setSearchQuery] = useState('')
   const [eventsList, setEventsList] = useState([])
-  const [checkboxState, setCheckboxState] = useState(false);
-  const[categoryFilter, setCategoryFilter] = useState([]);
-  const[eventosFiltrados,setEventosFiltrados] = useState([]);
-  const[categories,setCategories] = useState([]);
+  const [checkboxState, setCheckboxState] = useState(false)
+  const[categoryFilter, setCategoryFilter] = useState([])
+  const[eventosFiltrados,setEventosFiltrados] = useState([])
+  const[categories,setCategories] = useState([])
+  const { user } = useContext(AuthContext)
 
   const handleSearch = (query) => {
     setSearchQuery(query)
@@ -111,6 +111,7 @@ export const EventsListScreen = ({navigation}) => {
         style={styles.itemList}
         horizontal={false}
       />
+      {user && (<PlusButton navigation={navigation}/>)}
     </SafeAreaView>
   )
 }

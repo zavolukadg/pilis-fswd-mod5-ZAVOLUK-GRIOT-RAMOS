@@ -1,15 +1,14 @@
-import { AntDesign } from '@expo/vector-icons'; 
 import React from 'react'
-import {View } from 'react-native'
+import {View, Text, TouchableOpacity } from 'react-native'
 import { styles } from '../plus/PlusButton.styles'
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { Ionicons } from '@expo/vector-icons'
 
-export const PlusButton = () => {
+export const PlusButton = ({navigation}) => {
     return (
-      <FontAwesome.Button style={styles.button} 
-          name="whatsapp" 
-          backgroundColor="#25d366" 
-          size={32}
-      />
+      <View  style={styles.btnContainer}>
+        <TouchableOpacity onPress={() => navigation.navigate('AddEvent',{navigation})}>
+            <Ionicons name='add-outline' style={styles.button} />
+        </TouchableOpacity>
+      </View>
     )
   }
